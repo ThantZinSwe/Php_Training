@@ -2,31 +2,31 @@
 session_start();
 include 'connectdb.php';
 if(isset($_POST['updateButton'])){
-		$studentID = $_POST['studentID'];
-		$fullname = $_POST['fullname'];
-		$email = $_POST['email'];
+	$studentID = $_POST['studentID'];
+	$fullname = $_POST['fullname'];
+	$email = $_POST['email'];
 
-		try {	
-				$sql = "UPDATE student set fullname=:fullname, email=:email WHERE id=:studentID LIMIT 1";
-				$statment = $conn->prepare($sql);
-				$data = [
-						':fullname' => $fullname,
-						':email' => $email,
-						':studentID' => $studentID,
-				]; 
-				$execute = $statment->execute($data);
-				if ($execute) {
-						$_SESSION['message'] = "Updated successfully";
-						header('Location: index.php');
-						exit(0);
-				}else {
-						$_SESSION['message'] = "Not Updated";
-						header('Location: index.php');
-						exit(0);
-				}
-		} catch (PDOException $e) {
-			echo $e->getMessage();
-		}
+	try {	
+			$sql = "UPDATE student set fullname=:fullname, email=:email WHERE id=:studentID LIMIT 1";
+			$statment = $conn->prepare($sql);
+			$data = [
+					':fullname' => $fullname,
+					':email' => $email,
+					':studentID' => $studentID,
+			]; 
+			$execute = $statment->execute($data);
+			if ($execute) {
+					$_SESSION['message'] = "Updated successfully";
+					header('Location: index.php');
+					exit(0);
+			}else {
+					$_SESSION['message'] = "Not Updated";
+					header('Location: index.php');
+					exit(0);
+			}
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
 }
 ?>
 

@@ -6,30 +6,30 @@ if (isset($_POST['createButton'])) {
     $fullname = $_POST['fullname'];
     $email = $_POST['email'];
 
-		try {
-				$sql = "INSERT INTO student (fullname,email) VALUES (:fullname,:email)";
-	
-				$sqlRun = $conn->prepare($sql);
-		
-				$data = [
-						':fullname' => $fullname,
-						':email'    => $email,
-				];
-		
-				$sqlExecute = $sqlRun->execute($data);
-		
-				if ($sqlExecute) {
-						$_SESSION['message'] = "Created successfully";
-						header('Location: index.php');
-						exit(0);
-				} else {
-						$_SESSION['message'] = "Not Created";
-						header('Location: index.php');
-						exit(0);
-				}
-		} catch (PDOException $e){
-				echo $e->getMessage();
+	try {
+		$sql = "INSERT INTO student (fullname,email) VALUES (:fullname,:email)";
+
+		$sqlRun = $conn->prepare($sql);
+
+		$data = [
+				':fullname' => $fullname,
+				':email'    => $email,
+		];
+
+		$sqlExecute = $sqlRun->execute($data);
+
+		if ($sqlExecute) {
+				$_SESSION['message'] = "Created successfully";
+				header('Location: index.php');
+				exit(0);
+		} else {
+				$_SESSION['message'] = "Not Created";
+				header('Location: index.php');
+				exit(0);
 		}
+	} catch (PDOException $e){
+			echo $e->getMessage();
+	}
 
 }
 
