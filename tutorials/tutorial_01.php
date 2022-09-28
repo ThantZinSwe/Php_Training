@@ -27,6 +27,7 @@
     }
 </style>
 <body>
+    <h1 style="text-align: center;">Tutorial 1</h1>
     <table>
         <?php
 			for($row=1; $row<=8; $row++){
