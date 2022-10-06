@@ -63,6 +63,7 @@ if(isset($_POST['deleteUser'])){
                                 <th>Lastname</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+                                <th>Age</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -85,6 +86,7 @@ if(isset($_POST['deleteUser'])){
                                                 <td><?= $user->lastname; ?></td>
                                                 <td><?= $user->email; ?></td>
                                                 <td><?= $user->phone; ?></td>
+                                                <td><?= $user->age; ?></td>
                                                 <td>
                                                     <a href="editUser.php?id=<?= $user->id; ?>" class="btn btn-primary">Edit</a>
                                                 </td>

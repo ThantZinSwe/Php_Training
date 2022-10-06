@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'connectDB.php';
-$firstnameError = $lastnameError = $emailError = $phoneError = "";
+$firstnameError = $lastnameError = $emailError = $phoneError = $ageError  = "";
 $status = true;
 if (isset($_POST['updateUser'])) {
     $userID = $_POST['userID'];
@@ -9,6 +9,7 @@ if (isset($_POST['updateUser'])) {
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
+    $age = $_POST['age'];
 
     if (empty($firstname)) {
         $firstnameError = "First Name is required";
@@ -39,9 +40,16 @@ if (isset($_POST['updateUser'])) {
         $phoneError = "";
     }
 
+    if (empty($age)) {
+        $ageError = "Age is required";
+        $status = false;
+    } else {
+        $ageError = "";
+    }
+
     if($status){
         try{
-            $sql = "UPDATE users set firstname=:firstname,lastname=:lastname,email=:email,phone=:phone
+            $sql = "UPDATE users set firstname=:firstname,lastname=:lastname,email=:email,phone=:phone,age=:age
              WHERE id=:userID LIMIT 1";
             
             $statement = $conn->prepare($sql);
@@ -50,6 +58,7 @@ if (isset($_POST['updateUser'])) {
                 ':lastname' => $lastname,
                 ':email' => $email,
                 ':phone' => $phone,
+                ':age' => $age,
                 ':userID' => $userID,
 
             ];
@@ -137,6 +146,13 @@ if (isset($_POST['updateUser'])) {
                                 <input type="text" name="phone" class="form-control" value="<?= $user->phone; ?>">
 
                                 <span class="text-danger"><?php echo $phoneError; ?></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="age">Age</label>
+                                <input type="text" name="age" class="form-control" value="<?= $user->age; ?>">
+
+                                <span class="text-danger"><?php echo $ageError; ?></span>
                             </div>
 
                             <div>

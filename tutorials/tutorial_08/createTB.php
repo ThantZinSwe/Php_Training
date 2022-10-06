@@ -15,6 +15,7 @@ try {
         'lastname VARCHAR(20) NOT NULL, ' .
         'email  VARCHAR(50) NOT NULL, ' .
         'phone  VARCHAR(20) NOT NULL, ' .
+        'age  INT(3) NOT NULL, ' .
         'primary key ( id ))';
 
     $conn->exec($sql);

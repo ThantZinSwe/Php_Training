@@ -1,13 +1,14 @@
 <?php
 session_start();
 include 'connectDB.php';
-$firstnameError = $lastnameError = $emailError = $phoneError = "";
+$firstnameError = $lastnameError = $emailError = $phoneError  = $ageError = "";
 $status = true;
 if (isset($_POST['createUser'])) {
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
+    $age = $_POST['age'];
 
     if (empty($firstname)) {
         $firstnameError = "First Name is required";
@@ -37,10 +38,17 @@ if (isset($_POST['createUser'])) {
         $phoneError = "";
     }
 
+    if (empty($age)) {
+        $ageError = "Age is required";
+        $status = false;
+    } else {
+        $ageError = "";
+    }
+
     if($status){
         try{
-            $sql = "INSERT INTO users (firstname,lastname,email,phone) VALUES 
-             (:firstname,:lastname,:email,:phone)";
+            $sql = "INSERT INTO users (firstname,lastname,email,phone,age) VALUES 
+             (:firstname,:lastname,:email,:phone,:age)";
 
              $statement = $conn->prepare($sql);
 
@@ -49,6 +57,7 @@ if (isset($_POST['createUser'])) {
                 ':lastname' => $lastname,
                 ':email' => $email,
                 ':phone' => $phone,
+                ':age' => $age,
              ];
 
              $execute = $statement->execute($data);
@@ -120,6 +129,13 @@ if (isset($_POST['createUser'])) {
                                 <input type="text" name="phone" class="form-control">
 
                                 <span class="text-danger"><?php echo $phoneError; ?></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="age">Age</label>
+                                <input type="text" name="age" class="form-control">
+
+                                <span class="text-danger"><?php echo $ageError; ?></span>
                             </div>
 
                             <div>
