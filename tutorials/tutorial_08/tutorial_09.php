@@ -41,6 +41,7 @@ include "connectDB.php";
 <body>
     <h1 class="text-center">Tutorial 9 | Bar Chart</h1>
     <div class="chart mt-5">
+        <a href="index.php" class="btn btn-danger float-end">Back</a>
         <canvas id="myChart"></canvas>
     </div>
 

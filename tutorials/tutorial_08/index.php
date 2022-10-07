@@ -52,6 +52,8 @@ if(isset($_POST['deleteUser'])){
                     <div class="card-header">
                         <h3>Tutorial 8 CRUD
                             <a href="createUser.php" class="btn btn-primary float-end">Create User</a>
+                            <a href="tutorial_09.php" class="btn btn-primary float-end me-3">Bar Chart</a>
+                            <a href="../tutorial_10/logout.php" class="btn btn-danger float-end me-3">Logout</a>
                         </h3>
                     </div>
 
