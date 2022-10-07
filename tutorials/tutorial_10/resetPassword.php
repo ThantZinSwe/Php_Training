@@ -14,13 +14,13 @@ function sendResetPassword($email){
     $mail->isSMTP();                                         
     $mail->Host       = 'smtp.gmail.com';               
     $mail->SMTPAuth   = true;                            
-    $mail->Username   = 'thantzinswe01@gmail.com';             
-    $mail->Password   = 'wvtehntzmrhsdmrr';                 
+    $mail->Username   = 'thantzin14032001@gmail.com';             
+    $mail->Password   = 'wfuaukktiaihfftr';                 
     $mail->SMTPSecure = "tls";            
     $mail->Port       = 587;                                   
 
     //Recipients
-    $mail->setFrom('thantzinswe01@gmail.com');
+    $mail->setFrom('thantzin14032001@gmail.com');
     $mail->addAddress($email); 
 
     //Content
