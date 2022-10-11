@@ -94,7 +94,7 @@ if(isset($_POST['deleteUser'])){
                                                 </td>
                                                 <td>
                                                     <form method="POST">
-                                                        <button type="submit" class="btn btn-danger" name="deleteUser" value="<?= $user->id; ?>">Delete</button>
+                                                        <button type="submit" onclick="return confirm('Are you sure to want to delete this user?')" class="btn btn-danger" name="deleteUser" value="<?= $user->id; ?>">Delete</button>
                                                     </form>
                                                 </td>
                                             </tr>
