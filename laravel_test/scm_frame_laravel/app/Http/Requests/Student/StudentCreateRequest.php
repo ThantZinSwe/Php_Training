@@ -27,7 +27,7 @@ class StudentCreateRequest extends FormRequest
             'name'  => 'required',
             'major' => 'required',
             'age'   => 'required',
-            'phone' => 'required',
+            'phone' => 'required|min:11|regex:/(0)[0-9]{9}/',
         ];
     }
 
@@ -40,6 +40,8 @@ class StudentCreateRequest extends FormRequest
     {
         return [
             'name.required' => 'Student Name field is requied.',
+            'phone.min'     => 'Phone number must be at least 11 characters.',
+            'phone.regex'   => 'Phone number format is invalid.',
         ];
     }
 }

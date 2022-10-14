@@ -29,14 +29,14 @@ class MajorController extends Controller
      */
     public function index()
     {
-        $majors = $this->majorInterface->getMajors();
+        $majors = $this->majorInterface->index();
         return view('major.index', compact('majors'));
     }
 
     /**
      * @return View major create page
      */
-    public function createMajor()
+    public function create()
     {
         return view('major.create');
     }
@@ -46,9 +46,9 @@ class MajorController extends Controller
      * @param MajorCreateRequest $request request form create major
      * @return View major index
      */
-    public function storeMajor(MajorCreateRequest $request)
+    public function store(MajorCreateRequest $request)
     {
-        $this->majorInterface->storeMajor($request);
+        $this->majorInterface->store($request);
         return redirect()->route('major.index')->with(['success' => 'New Major create successfully']);
     }
 
@@ -56,9 +56,9 @@ class MajorController extends Controller
      * @param $id
      * @return View major edit page
      */
-    public function editMajor($id)
+    public function edit($id)
     {
-        $major = $this->majorInterface->getOneMajor($id);
+        $major = $this->majorInterface->edit($id);
         return view('major.edit', compact('major'));
     }
 
@@ -68,9 +68,9 @@ class MajorController extends Controller
      * @param $id
      * @return View major index
      */
-    public function updateMajor(MajorUpdateRequest $request, $id)
+    public function update(MajorUpdateRequest $request, $id)
     {
-        $this->majorInterface->updateMajor($request, $id);
+        $this->majorInterface->update($request, $id);
         return redirect()->route('major.index')->with(['success' => 'Major update successfully']);
     }
 
@@ -79,9 +79,9 @@ class MajorController extends Controller
      * @param Major $id
      * @return View major index
      */
-    public function deleteMajor($id)
+    public function delete($id)
     {
-        $this->majorInterface->deleteMajor($id);
+        $this->majorInterface->delete($id);
         return redirect()->route('major.index')->with(['success' => 'Major delete successfully']);
     }
 }

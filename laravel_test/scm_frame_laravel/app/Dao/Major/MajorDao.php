@@ -13,16 +13,10 @@ class MajorDao implements MajorDaoInterface
      * To get all major
      * @return Object $majors to get major
      */
-    public function getMajors()
+    public function index()
     {
         $majors = Major::orderBy('id', 'desc')->get();
         return $majors;
-    }
-
-    public function getOneMajor($id)
-    {
-        $major = Major::findOrFail($id);
-        return $major;
     }
 
     /**
@@ -30,11 +24,22 @@ class MajorDao implements MajorDaoInterface
      * @param Request $request request with inputs
      * @return Object $major to store major
      */
-    public function storeMajor(Request $request)
+    public function store(Request $request)
     {
         $major = new Major();
         $major->major_name = $request->name;
         $major->save();
+        return $major;
+    }
+
+    /**
+     * To edit student
+     * @param $id
+     * @return Major $major
+     */
+    public function edit($id)
+    {
+        $major = Major::findOrFail($id);
         return $major;
     }
 
@@ -44,7 +49,7 @@ class MajorDao implements MajorDaoInterface
      * @param $id
      * @return Object $major to update major
      */
-    public function updateMajor(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $major = Major::findOrFail($id);
         $major->major_name = $request->name;
@@ -56,7 +61,7 @@ class MajorDao implements MajorDaoInterface
      * To delete major
      * @param $id
      */
-    public function deleteMajor($id)
+    public function delete($id)
     {
         Major::findOrFail($id)->delete();
     }

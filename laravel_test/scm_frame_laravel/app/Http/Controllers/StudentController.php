@@ -27,16 +27,16 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = $this->studentInterface->getStudents();
+        $students = $this->studentInterface->index();
         return view('student.index', compact('students'));
     }
 
     /**
      * @return View student create page
      */
-    public function createStudent()
+    public function create()
     {
-        $majors = $this->studentInterface->getMajors();
+        $majors = $this->studentInterface->create();
         return view('student.create', compact('majors'));
     }
 
@@ -45,9 +45,9 @@ class StudentController extends Controller
      * @param StudentCreateRequest $request request form create major
      * @return View student index
      */
-    public function storeStudent(StudentCreateRequest $request)
+    public function store(StudentCreateRequest $request)
     {
-        $this->studentInterface->storeStudent($request);
+        $this->studentInterface->store($request);
         return redirect()->route('student.index')->with(['success' => 'New student create successfully']);
     }
 
@@ -55,11 +55,10 @@ class StudentController extends Controller
      * @param $id
      * @return View student edit page
      */
-    public function editStudent($id)
+    public function edit($id)
     {
-        $student = $this->studentInterface->getOneStudent($id);
-        $majors = $this->studentInterface->getMajors();
-        return view('student.edit', compact('student', 'majors'));
+        $data = $this->studentInterface->edit($id);
+        return view('student.edit', $data);
     }
 
     /**
@@ -68,9 +67,9 @@ class StudentController extends Controller
      * @param $id
      * @return View student index
      */
-    public function updateStudent(StudentUpdateRequest $request, $id)
+    public function update(StudentUpdateRequest $request, $id)
     {
-        $this->studentInterface->updateStudent($request, $id);
+        $this->studentInterface->update($request, $id);
         return redirect()->route('student.index')->with(['success' => 'Student update successfully']);
     }
 
@@ -79,9 +78,10 @@ class StudentController extends Controller
      * @param Student $id
      * @return View student index
      */
-    public function deleteStudent($id)
+    public function delete($id)
     {
-        $this->studentInterface->deleteStudent($id);
+        $this->studentInterface->delete($id);
         return redirect()->route('student.index')->with(['success' => 'Student delete successfully']);
     }
+
 }

@@ -11,21 +11,21 @@ interface MajorDaoInterface
      * To get all major
      * @return Object $majors to get major
      */
-    public function getMajors();
-
-    /**
-     * To get one major
-     * @param $id
-     * @return Object $major to get one major
-     */
-    public function getOneMajor($id);
+    public function index();
 
     /**
      * To store major
      * @param Request $request request with inputs
      * @return Object $major to store major
      */
-    public function storeMajor(Request $request);
+    public function store(Request $request);
+
+    /**
+     * To edit student
+     * @param $id
+     * @return Major $major
+     */
+    public function edit($id);
 
     /**
      * To update major
@@ -33,11 +33,11 @@ interface MajorDaoInterface
      * @param $id
      * @return Object $major to update major
      */
-    public function updateMajor(Request $request, $id);
+    public function update(Request $request, $id);
 
     /**
      * To delete major
      * @param $id
      */
-    public function deleteMajor($id);
+    public function delete($id);
 }

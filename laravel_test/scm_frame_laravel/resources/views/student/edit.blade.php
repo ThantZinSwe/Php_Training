@@ -50,7 +50,7 @@
                         <label for="age" class="control-label">Age</label>
 
                         <div class="col-md-12 col-12">
-                            <input type="text" name="age" class="form-control" value="{{old('age',$student->age)}}">
+                            <input type="number" name="age" class="form-control" value="{{old('age',$student->age)}}">
                             @error('age')
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
