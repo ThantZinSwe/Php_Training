@@ -1,4 +1,19 @@
 @extends('layouts.main')
+@section('style')
+    {{-- <style>
+        input[type="file"] {
+            display: none;
+        }
+        .import-file {
+            border: 1px solid #ccc;
+            display: inline-block;
+            border-radius: 5px;
+            padding: 9px 12px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+    </style> --}}
+@endsection
 @section('content')
 <div class="row mt-5">
     <div class="col-8 col-md-8 offset-2">
@@ -9,10 +24,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
+        @if (Session::has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Sorry! </strong>{{ Session::get('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        <form action="{{route('student.import')}}" class="mb-4"  method="POST" enctype="multipart/form-data">
+            @csrf
+            <label for="file-upload" class="import-file">
+                Import Excel File  <input id="file-upload" type="file" class="form-control form-control-sm" accept=".xlsx,.xls,.csv"  name="importFile"/>
+           </label>
+           <button type="submit" class="btn btn-secondary btn-sm">Import</button>
+        </form>
+
+        @if ($errors->any())
+            <h5 class="text-danger">Excel Errors</h5>
+            <ol>
+                @foreach ($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ol>
+        @endif
+
         <div class="card">
             <div class="card-header">
                 <h5>Current Students
                     <a href="{{route('student.create')}}" class="btn btn-secondary float-end">Create Student</a>
+                    <a href="{{route('student.exprot')}}" class="btn btn-success float-end me-2 ">Export</a>
                 </h5>
             </div>
 

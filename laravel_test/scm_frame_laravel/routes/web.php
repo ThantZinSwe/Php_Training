@@ -15,6 +15,8 @@ Route::post('/students/create', [StudentController::class, 'store'])->name('stud
 Route::get('/students/edit/{id}', [StudentController::class, 'edit'])->name('student.edit');
 Route::put('/students/edit/{id}', [StudentController::class, 'update'])->name('student.update');
 Route::delete('/students/{id}', [StudentController::class, 'delete'])->name('student.delete');
+Route::get('/students/export', [StudentController::class, 'export'])->name('student.exprot');
+Route::post('/students/import', [StudentController::class, 'import'])->name('student.import');
 
 //major route
 Route::get('/majors', [MajorController::class, 'index'])->name('major.index');

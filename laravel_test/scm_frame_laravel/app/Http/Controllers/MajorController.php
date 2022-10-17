@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Dao\Major\MajorDaoInterface;
+use App\Contracts\Services\Major\MajorServiceInterface;
 use App\Http\Requests\Major\MajorCreateRequest;
 use App\Http\Requests\Major\MajorUpdateRequest;
 use App\Models\Major;
@@ -18,9 +18,9 @@ class MajorController extends Controller
      * Create new controller instance
      * @return void
      */
-    public function __construct(MajorDaoInterface $majorDaoInterface)
+    public function __construct(MajorServiceInterface $majorServiceInterface)
     {
-        $this->majorInterface = $majorDaoInterface;
+        $this->majorInterface = $majorServiceInterface;
     }
 
     /**

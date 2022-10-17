@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Dao\Student\StudentDaoInterface;
+use App\Contracts\Services\Student\StudentServiceInterface;
 use App\Http\Requests\Student\StudentCreateRequest;
 use App\Http\Requests\Student\StudentUpdateRequest;
+use App\Models\Student;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -17,9 +20,9 @@ class StudentController extends Controller
      * Create new controller instance
      * @return void
      */
-    public function __construct(StudentDaoInterface $studentDaoInterface)
+    public function __construct(StudentServiceInterface $studentServiceInterface)
     {
-        $this->studentInterface = $studentDaoInterface;
+        $this->studentInterface = $studentServiceInterface;
     }
 
     /**
@@ -82,6 +85,26 @@ class StudentController extends Controller
     {
         $this->studentInterface->delete($id);
         return redirect()->route('student.index')->with(['success' => 'Student delete successfully']);
+    }
+
+    /**
+     * To export students data
+     * To check students data and redirect back
+     * @return Exprot excel file
+     */
+    public function export()
+    {
+        return $this->studentInterface->export();
+    }
+
+    /**
+     * To import students data
+     * To check students data and redirect back
+     * @param Request $request input file
+     */
+    public function import(Request $request)
+    {
+        return $this->studentInterface->import($request);
     }
 
 }
