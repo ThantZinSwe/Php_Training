@@ -1,19 +1,4 @@
 @extends('layouts.main')
-@section('style')
-    {{-- <style>
-        input[type="file"] {
-            display: none;
-        }
-        .import-file {
-            border: 1px solid #ccc;
-            display: inline-block;
-            border-radius: 5px;
-            padding: 9px 12px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-    </style> --}}
-@endsection
 @section('content')
 <div class="row mt-5">
     <div class="col-8 col-md-8 offset-2">

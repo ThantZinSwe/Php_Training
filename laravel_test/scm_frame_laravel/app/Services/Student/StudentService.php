@@ -96,10 +96,10 @@ class StudentService implements StudentServiceInterface
         $students = Student::all();
         $count = Student::count();
 
-        if ($count <= 0) {
-            return redirect()->back()->with(['error' => 'No students data.']);
-        } else {
+        if ($count > 0) {
             return Excel::download(new StudentsExport($students), 'students.xlsx');
+        } else {
+            return redirect()->back()->with(['error' => 'No students data.']);
         }
 
     }
@@ -114,7 +114,7 @@ class StudentService implements StudentServiceInterface
 
         if (isset($request->importFile)) {
             Excel::import(new StudentsImport, $request->file('importFile'));
-            return redirect()->route('student.index');
+            return redirect()->back();
         } else {
             return redirect()->back()->with(['error' => 'Please fill import file.']);
         }
