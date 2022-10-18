@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
 <div class="row mt-5">
-    <div class="col-8 col-md-8 offset-2">
+    <div class="col-10 col-md-10 offset-1">
 
         @if (Session::has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -17,14 +17,37 @@
             </div>
         @endif
 
-        <form action="{{route('student.import')}}" class="mb-4"  method="POST" enctype="multipart/form-data">
-            @csrf
-            <label for="file-upload" class="import-file">
-                Import Excel File  <input id="file-upload" type="file" class="form-control form-control-sm" accept=".xlsx,.xls,.csv"  name="importFile"/>
-           </label>
-           <button type="submit" class="btn btn-secondary btn-sm">Import</button>
-        </form>
+       <div class="row">
+            {{-- Import Form --}}
+            <div class="col-4 col-md-4 ">
+                <form action="{{route('student.import')}}" class="mb-4"  method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <label for="file-upload" class="import-file">
+                        Import Excel File  <input id="file-upload" type="file" class="form-control form-control-sm" accept=".xlsx,.xls,.csv"  name="importFile"/>
+                    </label>
+                    <button type="submit" class="btn btn-secondary btn-sm">Import</button>
+                </form>
+            </div>
 
+            {{-- Search Form --}}
+            <div class="col-8 col-md-8">
+                <form action="{{route('student.search')}}" class="float-end" method="GET">
+                    @csrf
+                    <label for="Search Text">
+                        Search <input type="text" name="search" class="form-control">
+                    </label>
+                    <label for="Start Date">
+                        Start Date <input type="date" name="startDate" class="form-control">
+                    </label>
+                    <label for="Start Date">
+                        End Date <input type="date" name="endDate" class="form-control">
+                    </label>
+                    <button type="submit" class="btn btn-secondary ">Search</button>
+                </form>
+            </div>
+       </div>
+
+       {{-- Excel Improt Error --}}
         @if ($errors->any())
             <h5 class="text-danger">Excel Errors</h5>
             <ol>
@@ -34,6 +57,7 @@
             </ol>
         @endif
 
+        {{-- Card --}}
         <div class="card">
             <div class="card-header">
                 <h5>Current Students
@@ -43,6 +67,7 @@
             </div>
 
             <div class="card-body">
+                {{-- Student Table --}}
                 <table class="table table-striped task-table">
 
                     <!-- Table Headings -->
@@ -52,6 +77,7 @@
                         <th>Major</th>
                         <th>Age</th>
                         <th>Phone No</th>
+                        <th>Date</th>
                         <th>&nbsp;</th>
                     </thead>
 
@@ -84,6 +110,11 @@
                                     <div>{{ $student->phone }}</div>
                                 </td>
 
+                                <!-- Student start date -->
+                                <td class="fw-bold fs-6">
+                                    <div>{{ $student->created_at->format('Y-m-d') }}</div>
+                                </td>
+
                                 <td>
                                     <div>
                                         <a href="{{route('student.edit',$student->id)}}" class="btn btn-warning text-white btn-sm">Edit</a>
@@ -99,6 +130,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div>
+                    {{$students->links()}}
+                </div>
             </div>
         </div>
     </div>

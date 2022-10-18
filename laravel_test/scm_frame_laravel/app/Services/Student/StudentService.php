@@ -87,6 +87,16 @@ class StudentService implements StudentServiceInterface
     }
 
     /**
+     * To search data
+     * @param Request $request input text and date
+     * @return View Student index
+     */
+    public function search(Request $request)
+    {
+        return $this->studentDao->search($request);
+    }
+
+    /**
      * To export students data
      * To check students data and redirect back
      * @return Exprot excel file

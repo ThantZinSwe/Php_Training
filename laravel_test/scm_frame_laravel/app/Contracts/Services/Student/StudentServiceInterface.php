@@ -48,6 +48,13 @@ interface StudentServiceInterface
     public function delete($id);
 
     /**
+     * To search data
+     * @param Request $request input text and date
+     * @return View Student index
+     */
+    public function search(Request $request);
+
+    /**
      * To export students data
      * @return Exprot excel file
      */

@@ -46,4 +46,11 @@ interface StudentDaoInterface
      * @param $id
      */
     public function delete($id);
+
+    /**
+     * To search data
+     * @param Request $request input text and date
+     * @return View Student index
+     */
+    public function search(Request $request);
 }

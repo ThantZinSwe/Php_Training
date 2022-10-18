@@ -17,6 +17,7 @@ Route::put('/students/edit/{id}', [StudentController::class, 'update'])->name('s
 Route::delete('/students/{id}', [StudentController::class, 'delete'])->name('student.delete');
 Route::get('/students/export', [StudentController::class, 'export'])->name('student.exprot');
 Route::post('/students/import', [StudentController::class, 'import'])->name('student.import');
+Route::get('/students/search', [StudentController::class, 'search'])->name('student.search');
 
 //major route
 Route::get('/majors', [MajorController::class, 'index'])->name('major.index');

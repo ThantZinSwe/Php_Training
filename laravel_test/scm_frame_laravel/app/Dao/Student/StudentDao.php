@@ -15,7 +15,7 @@ class StudentDao implements StudentDaoInterface
      */
     public function index()
     {
-        $students = Student::with('major')->orderBy('id', 'desc')->get();
+        $students = Student::with('major')->orderBy('id', 'desc')->paginate(5);
         return $students;
     }
 
@@ -83,4 +83,52 @@ class StudentDao implements StudentDaoInterface
     {
         Student::findOrFail($id)->delete();
     }
+
+    /**
+     * To search data
+     * @param Request $request input text and date
+     * @return View Student index
+     */
+    public function search(Request $request)
+    {
+        $search = $request->search;
+
+        $students = Student::select('students.*', 'majors.major_name')
+            ->join('majors', 'majors.id', 'students.major_id');
+
+        if (isset($request->search)) {
+            $students->where(function ($q) use ($search) {
+                $q->orWhereRaw("student_name like '%$search%'")
+                    ->orWhereRaw("major_name like '%$search%'")
+                    ->orWhereRaw("phone like '%$search%'")
+                    ->orWhereRaw("age like '%$search%'");
+            });
+
+        }
+
+        if (isset($request->startDate) || isset($request->endDate)) {
+            $startDate = $request->startDate;
+            $endDate = $request->endDate;
+
+            $students->where(function ($q) use ($startDate, $endDate) {
+
+                if (!is_null($startDate) && is_null($endDate)) {
+                    $q->whereRaw("students.created_at >= '$startDate'");
+                } elseif (is_null($startDate) && !is_null($endDate)) {
+                    $q->whereRaw("students.created_at <= '$endDate'");
+                } else {
+                    $q->whereRaw("students.created_at <= '$endDate'")
+                        ->whereRaw("students.created_at >= '$startDate'");
+                }
+
+            });
+
+        }
+
+        $students = $students->paginate(5);
+
+        $students->appends($request->all());
+        return $students;
+    }
+
 }

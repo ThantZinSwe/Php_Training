@@ -107,4 +107,15 @@ class StudentController extends Controller
         return $this->studentInterface->import($request);
     }
 
+    /**
+     * To search data
+     * @param Request $request input text and date
+     * @return View Student index
+     */
+    public function search(Request $request)
+    {
+        $students = $this->studentInterface->search($request);
+        return view('student.index', compact('students'));
+    }
+
 }
