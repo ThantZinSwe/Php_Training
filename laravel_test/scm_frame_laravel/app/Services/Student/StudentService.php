@@ -87,6 +87,15 @@ class StudentService implements StudentServiceInterface
     }
 
     /**
+     * To paginate student
+     * @return $students
+     */
+    public function pagination()
+    {
+        return $this->studentDao->pagination();
+    }
+
+    /**
      * To search data
      * @param Request $request input text and date
      * @return View Student index

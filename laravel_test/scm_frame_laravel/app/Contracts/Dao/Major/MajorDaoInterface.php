@@ -40,4 +40,10 @@ interface MajorDaoInterface
      * @param $id
      */
     public function delete($id);
+
+    /**
+     * To paginate major
+     * @return $majors
+     */
+    public function pagination();
 }

@@ -48,6 +48,12 @@ interface StudentServiceInterface
     public function delete($id);
 
     /**
+     * To paginate student
+     * @return $students
+     */
+    public function pagination();
+
+    /**
      * To search data
      * @param Request $request input text and date
      * @return View Student index

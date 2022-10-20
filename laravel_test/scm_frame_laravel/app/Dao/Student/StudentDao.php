@@ -5,6 +5,7 @@ namespace App\Dao\Student;
 use App\Contracts\Dao\Student\StudentDaoInterface;
 use App\Models\Major;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StudentDao implements StudentDaoInterface
@@ -53,7 +54,7 @@ class StudentDao implements StudentDaoInterface
      */
     public function edit($id)
     {
-        $student = Student::with('major')->findOrFail($id);
+        $student = Student::with('major')->find($id);
         $majors = Major::get();
         return compact('student', 'majors');
     }
@@ -66,12 +67,16 @@ class StudentDao implements StudentDaoInterface
      */
     public function update(Request $request, $id)
     {
-        $student = Student::findOrFail($id);
-        $student->student_name = $request->name;
-        $student->major_id = $request->major;
-        $student->age = $request->age;
-        $student->phone = $request->phone;
-        $student->save();
+        $student = Student::find($id);
+
+        if ($student) {
+            $student->student_name = $request->name;
+            $student->major_id = $request->major;
+            $student->age = $request->age;
+            $student->phone = $request->phone;
+            $student->save();
+        }
+
         return $student;
     }
 
@@ -81,7 +86,19 @@ class StudentDao implements StudentDaoInterface
      */
     public function delete($id)
     {
+        $student = Student::find($id);
         Student::findOrFail($id)->delete();
+        return $student;
+    }
+
+    /**
+     * To paginate major
+     * @return $majors
+     */
+    public function pagination()
+    {
+        $students = Student::orderBy('id', 'desc')->paginate(5);
+        return $students;
     }
 
     /**
@@ -108,7 +125,7 @@ class StudentDao implements StudentDaoInterface
 
         if (isset($request->startDate) || isset($request->endDate)) {
             $startDate = $request->startDate;
-            $endDate = $request->endDate;
+            $endDate = Carbon::parse($request->endDate)->addDays()->format('Y-m-d');
 
             $students->where(function ($q) use ($startDate, $endDate) {
 
@@ -125,7 +142,7 @@ class StudentDao implements StudentDaoInterface
 
         }
 
-        $students = $students->paginate(5);
+        $students = $students->orderBy('id', 'desc')->paginate(5);
 
         $students->appends($request->all());
         return $students;

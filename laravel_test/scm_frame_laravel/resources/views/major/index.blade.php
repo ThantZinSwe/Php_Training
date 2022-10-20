@@ -55,6 +55,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div>
+                    {{$majors->links()}}
+                </div>
             </div>
         </div>
     </div>

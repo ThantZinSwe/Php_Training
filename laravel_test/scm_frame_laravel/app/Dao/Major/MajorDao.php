@@ -15,7 +15,7 @@ class MajorDao implements MajorDaoInterface
      */
     public function index()
     {
-        $majors = Major::orderBy('id', 'desc')->get();
+        $majors = Major::orderBy('id', 'desc')->paginate(5);
         return $majors;
     }
 
@@ -39,7 +39,7 @@ class MajorDao implements MajorDaoInterface
      */
     public function edit($id)
     {
-        $major = Major::findOrFail($id);
+        $major = Major::find($id);
         return $major;
     }
 
@@ -51,7 +51,7 @@ class MajorDao implements MajorDaoInterface
      */
     public function update(Request $request, $id)
     {
-        $major = Major::findOrFail($id);
+        $major = Major::find($id);
         $major->major_name = $request->name;
         $major->save();
         return $major;
@@ -65,4 +65,15 @@ class MajorDao implements MajorDaoInterface
     {
         Major::findOrFail($id)->delete();
     }
+
+    /**
+     * To paginate major
+     * @return $majors
+     */
+    public function pagination()
+    {
+        $majors = Major::orderBy('id', 'desc')->paginate(5);
+        return $majors;
+    }
+
 }

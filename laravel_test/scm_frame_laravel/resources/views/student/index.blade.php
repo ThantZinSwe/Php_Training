@@ -34,13 +34,13 @@
                 <form action="{{route('student.search')}}" class="float-end" method="GET">
                     @csrf
                     <label for="Search Text">
-                        Search <input type="text" name="search" class="form-control">
+                        Search <input type="text" name="search" class="form-control" value="{{request('search')}}">
                     </label>
                     <label for="Start Date">
-                        Start Date <input type="date" name="startDate" class="form-control">
+                        Start Date <input type="date" name="startDate" class="form-control" value="{{request('startDate')}}">
                     </label>
                     <label for="Start Date">
-                        End Date <input type="date" name="endDate" class="form-control">
+                        End Date <input type="date" name="endDate" class="form-control" value="{{request('endDate')}}">
                     </label>
                     <button type="submit" class="btn btn-secondary ">Search</button>
                 </form>

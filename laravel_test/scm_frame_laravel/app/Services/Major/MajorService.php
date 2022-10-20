@@ -70,4 +70,13 @@ class MajorService implements MajorServiceInterface
     {
         return $this->majorDao->delete($id);
     }
+
+    /**
+     * To paginate major
+     * @return $majors
+     */
+    public function pagination()
+    {
+        return $this->majorDao->pagination();
+    }
 }
