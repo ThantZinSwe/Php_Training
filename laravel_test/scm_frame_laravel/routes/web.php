@@ -4,7 +4,10 @@ use App\Http\Controllers\MajorController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Task\TaskController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+Auth::routes(['verify' => true]);
 
 Route::get('/', [PageController::class, 'index'])->name('index');
 
@@ -30,3 +33,5 @@ Route::delete('/majors/{id}', [MajorController::class, 'delete'])->name('major.d
 Route::get('/task', [TaskController::class, 'showTask'])->name('task.show');
 Route::post('/create/task', [TaskController::class, 'createTask'])->name('task.create');
 Route::delete('/task/{task}', [TaskController::class, 'deleteTask'])->name('task.delete');
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

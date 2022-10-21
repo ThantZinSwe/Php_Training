@@ -36,6 +36,14 @@
               <li class="nav-item">
                 <a class="nav-link me-3" href="{{route('api.major.index')}}">Ajax Majors</a>
               </li>
+              <li class="nav-item">
+                <form action="{{route('logout')}}" method="POST">
+                    @csrf
+                    <li>
+                        <button type="submit" class="btn btn-danger btn-sm mt-1">Logout</button>
+                    </li>
+                </form>
+              </li>
             </ul>
           </div>
         </div>
