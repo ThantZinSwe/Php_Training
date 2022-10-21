@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Contracts\Services\Major\MajorServiceInterface;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Major\MajorCreateRequest;
+use App\Http\Requests\Major\MajorUpdateRequest;
 use App\Models\Major;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class MajorApiController extends Controller
 {
@@ -36,19 +37,8 @@ class MajorApiController extends Controller
      * @param Request $request request form create major
      * @return response json
      */
-    public function store(Request $request)
+    public function store(MajorCreateRequest $request)
     {
-        $validators = Validator::make($request->all(), [
-            'name' => 'required',
-        ]);
-
-        if ($validators->fails()) {
-            return response()->json([
-                'status' => 400,
-                'errors' => $validators->errors(),
-            ]);
-        }
-
         $this->majorInterface->store($request);
         return response()->json([
             'status'  => 200,
@@ -85,32 +75,20 @@ class MajorApiController extends Controller
      * @param $id
      * @return response json
      */
-    public function update(Request $request, $id)
+    public function update(MajorUpdateRequest $request, $id)
     {
-        $validators = Validator::make($request->all(), [
-            'name' => 'required',
-        ]);
+        $major = $this->majorInterface->update($request, $id);
 
-        if ($validators->fails()) {
+        if ($major) {
             return response()->json([
-                'status' => 400,
-                'errors' => $validators->errors(),
+                'status'  => 200,
+                'message' => 'Major updated successfully',
             ]);
         } else {
-            $major = $this->majorInterface->update($request, $id);
-
-            if ($major) {
-                return response()->json([
-                    'status'  => 200,
-                    'message' => 'Major updated successfully',
-                ]);
-            } else {
-                return response()->json([
-                    'status'  => 404,
-                    'message' => 'Major not found',
-                ]);
-            }
-
+            return response()->json([
+                'status'  => 404,
+                'message' => 'Major not found',
+            ]);
         }
 
     }

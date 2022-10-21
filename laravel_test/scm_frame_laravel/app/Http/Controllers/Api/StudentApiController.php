@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Contracts\Services\Student\StudentServiceInterface;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Student\StudentCreateRequest;
+use App\Http\Requests\Student\StudentUpdateRequest;
 use App\Models\Major;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class StudentApiController extends Controller
 {
@@ -49,22 +50,8 @@ class StudentApiController extends Controller
      * @param Request $request request form create major
      * @return response json
      */
-    public function store(Request $request)
+    public function store(StudentCreateRequest $request)
     {
-        $validators = Validator::make($request->all(), [
-            'name'  => 'required',
-            'major' => 'required',
-            'age'   => 'required',
-            'phone' => 'required|min:11|regex:/(0)[0-9]{9}/',
-        ]);
-
-        if ($validators->fails()) {
-            return response()->json([
-                'status' => 400,
-                'errors' => $validators->errors(),
-            ]);
-        }
-
         $this->studentInterface->store($request);
         return response()->json([
             'status'  => 200,
@@ -101,35 +88,20 @@ class StudentApiController extends Controller
      * @param $id
      * @return response json
      */
-    public function update(Request $request, $id)
+    public function update(StudentUpdateRequest $request, $id)
     {
-        $validators = Validator::make($request->all(), [
-            'name'  => 'required',
-            'major' => 'required',
-            'age'   => 'required',
-            'phone' => 'required|min:11|regex:/(0)[0-9]{9}/',
-        ]);
+        $student = $this->studentInterface->update($request, $id);
 
-        if ($validators->fails()) {
+        if ($student) {
             return response()->json([
-                'status' => 400,
-                'errors' => $validators->errors(),
+                'status'  => 200,
+                'message' => 'Student updated successfully',
             ]);
         } else {
-            $student = $this->studentInterface->update($request, $id);
-
-            if ($student) {
-                return response()->json([
-                    'status'  => 200,
-                    'message' => 'Student updated successfully',
-                ]);
-            } else {
-                return response()->json([
-                    'status'  => 404,
-                    'message' => 'Student not found',
-                ]);
-            }
-
+            return response()->json([
+                'status'  => 404,
+                'message' => 'Student not found',
+            ]);
         }
 
     }

@@ -3,7 +3,118 @@
 <div class="row mt-5">
     <div class="col-10 col-md-10 offset-1">
 
-        <div class="successMessage"></div>
+        <div id="alert">
+
+        </div>
+
+        <!--Create Modal -->
+        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createModalLabel">Student Create</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label for="Student Name" class="col-form-label">Student Name:</label>
+                                <input type="text" class="form-control" id="name">
+                                <small class="text-danger d-none createNameError">something</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Major" class="col-form-label">Major:</label>
+                                <select class="form-control" id="major">
+                                </select>
+                                <small class="text-danger d-none createMajorError">something</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Age" class="col-form-label">Age:</label>
+                                <input type="number" class="form-control" id="age">
+                                <small class="text-danger d-none createAgeError">something</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Phone" class="col-form-label">Phone:</label>
+                                <input type="text" class="form-control" id="phone">
+                                <small class="text-danger d-none createPhoneError">something</small>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary store">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Edit Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Student Edit</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST">
+                            <input type="hidden" id="updateID">
+                            <div class="mb-3">
+                                <label for="Student Name" class="col-form-label">Student Name:</label>
+                                <input type="text" class="form-control" id="updateName">
+                                <small class="text-danger d-none updateNameError">something</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Major" class="col-form-label">Major:</label>
+                                <select class="form-control" id="updateMajor">
+                                </select>
+                                <small class="text-danger d-none updateMajorError">something</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Age" class="col-form-label">Age:</label>
+                                <input type="number" class="form-control" id="updateAge">
+                                <small class="text-danger d-none updateAgeError">something</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Phone" class="col-form-label">Phone:</label>
+                                <input type="text" class="form-control" id="updatePhone">
+                                <small class="text-danger d-none updatePhoneError">something</small>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary update">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Delete Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Student Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="deleteID">
+                        <span class="fw-bold">Are you sure to want to delete this student?</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger destroy">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {{-- Card --}}
         <div class="card">
@@ -27,7 +138,6 @@
                         <th>Major</th>
                         <th>Age</th>
                         <th>Phone No</th>
-                        {{-- <th>Date</th> --}}
                         <th>&nbsp;</th>
                     </thead>
 
@@ -60,11 +170,6 @@
                                     <div>{{ $student->phone }}</div>
                                 </td>
 
-                                <!-- Student start date -->
-                                {{-- <td class="fw-bold fs-6">
-                                    <div>{{ $student->created_at->format('Y-m-d') }}</div>
-                                </td> --}}
-
                                 <td>
                                     <button type="button" class="btn btn-warning text-white btn-sm ms-3 edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{$student->id}}">Edit</a>
                                     <button type="button" class="btn btn-danger text-white btn-sm ms-3 delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$student->id}}">Delete</a>
@@ -75,114 +180,6 @@
                 </table>
                 <div>
                     {{$students->links()}}
-                </div>
-
-                <!--Create Modal -->
-                <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="createModalLabel">Student Create</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="POST">
-                                    <div class="mb-3">
-                                        <label for="Student Name" class="col-form-label">Student Name:</label>
-                                        <input type="text" class="form-control" id="name">
-                                        <small class="text-danger d-none createNameError">something</small>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Major" class="col-form-label">Major:</label>
-                                        <select class="form-control" id="major">
-                                        </select>
-                                        <small class="text-danger d-none createMajorError">something</small>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Age" class="col-form-label">Age:</label>
-                                        <input type="number" class="form-control" id="age">
-                                        <small class="text-danger d-none createAgeError">something</small>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Phone" class="col-form-label">Phone:</label>
-                                        <input type="text" class="form-control" id="phone">
-                                        <small class="text-danger d-none createPhoneError">something</small>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary store">Create</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Edit Modal -->
-                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel">Student Edit</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="POST">
-                                    <input type="hidden" id="updateID">
-                                    <div class="mb-3">
-                                        <label for="Student Name" class="col-form-label">Student Name:</label>
-                                        <input type="text" class="form-control" id="updateName">
-                                        <small class="text-danger d-none updateNameError">something</small>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Major" class="col-form-label">Major:</label>
-                                        <select class="form-control" id="updateMajor">
-                                        </select>
-                                        <small class="text-danger d-none updateMajorError">something</small>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Age" class="col-form-label">Age:</label>
-                                        <input type="number" class="form-control" id="updateAge">
-                                        <small class="text-danger d-none updateAgeError">something</small>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="Phone" class="col-form-label">Phone:</label>
-                                        <input type="text" class="form-control" id="updatePhone">
-                                        <small class="text-danger d-none updatePhoneError">something</small>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary update">Update</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Delete Modal -->
-                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Student Delete</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                               <span class="fw-bold">Are you sure to want to delete this major?</span>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-danger destroy">Delete</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -206,6 +203,9 @@
                         res.majors.forEach(function(major) {
                             $('#major').append(`<option value="${major.id}">${major.major_name}</option>`);
                         });
+                        $('#name').val("");
+                        $('#age').val("");
+                        $('#phone').val("");
                     }
                 });
             });
@@ -213,6 +213,7 @@
             // Store Student
             $(document).on('click','.store',function(e){
                 e.preventDefault();
+
                 var storeData = {
                     'name' : $('#name').val(),
                     'major' : $('#major').val(),
@@ -226,44 +227,41 @@
                     data: storeData,
                     dataType: "json",
                     success: function(res){
-                        if(res.status == 400){
-                            if(res.errors.name){
-                                $('.createNameError').removeClass('d-none');
-                                $('.createNameError').text(res.errors.name[0]);
-                            }else{
-                                $('.createNameError').addClass('d-none');
-                            }
-
-                            if(res.errors.major){
-                                $('.createMajorError').removeClass('d-none');
-                                $('.createMajorError').text(res.errors.major[0]);
-                            }else{
-                                $('.createMajorError').addClass('d-none');
-                            }
-
-                            if(res.errors.age){
-                                $('.createAgeError').removeClass('d-none');
-                                $('.createAgeError').text(res.errors.age[0]);
-                            }else{
-                                $('.createAgeError').addClass('d-none');
-                            }
-
-                            if(res.errors.phone){
-                                $('.createPhoneError').removeClass('d-none');
-                                $('.createPhoneError').text(res.errors.phone[0]);
-                            }else{
-                                $('.createPhoneError').addClass('d-none');
-                            }
-                        }
-
                         if(res.status == 200){
-                            $('.successMessage').html("");
-                            $('.successMessage').addClass('alert alert-success');
-                            $('.successMessage').text(res.message);
+                            alertSuccess(res.message);
                             $('#createModal').modal('hide');
                             $('#createModal').find('input').val("");
                             $('.table').load(location.href+ ' .table');
                             pagination(1);
+                        }
+                    },error: function(reject){
+                        var res = $.parseJSON(reject.responseText);
+                        if(res.errors['name']){
+                            $('.createNameError').removeClass('d-none');
+                            $('.createNameError').text(res.errors['name'][0]);
+                        }else{
+                            $('.createNameError').addClass('d-none');
+                        }
+
+                        if(res.errors['major']){
+                            $('.createMajorError').removeClass('d-none');
+                            $('.createMajorError').text(res.errors['major'][0]);
+                        }else{
+                            $('.createMajorError').addClass('d-none');
+                        }
+
+                        if(res.errors['age']){
+                            $('.createAgeError').removeClass('d-none');
+                            $('.createAgeError').text(res.errors['age'][0]);
+                        }else{
+                            $('.createAgeError').addClass('d-none');
+                        }
+
+                        if(res.errors.phone){
+                            $('.createPhoneError').removeClass('d-none');
+                            $('.createPhoneError').text(res.errors['phone'][0]);
+                        }else{
+                            $('.createPhoneError').addClass('d-none');
                         }
                     }
                 });
@@ -280,9 +278,7 @@
                     dataType: "json",
                     success: function(res){
                         if(res.status == 404){
-                            $('.successMessage').html("");
-                            $('.successMessage').addClass('alert alert-danger');
-                            $('.successMessage').text(res.message);
+                            alertError(res.message);
                         }
 
                         if(res.status == 200){
@@ -317,69 +313,67 @@
                     data: updateData,
                     dataType: "json",
                     success: function(res){
-                        if(res.status == 400){
-                            if(res.errors.name){
-                                $('.updateNameError').removeClass('d-none');
-                                $('.updateNameError').text(res.errors.name[0]);
-                            }else{
-                                $('.updateNameError').addClass('d-none');
-                            }
-
-                            if(res.errors.major){
-                                $('.updateMajorError').removeClass('d-none');
-                                $('.updateMajorError').text(res.errors.major[0]);
-                            }else{
-                                $('.updateMajorError').addClass('d-none');
-                            }
-
-                            if(res.errors.age){
-                                $('.updateAgeError').removeClass('d-none');
-                                $('.updateAgeError').text(res.errors.age[0]);
-                            }else{
-                                $('.updateAgeError').addClass('d-none');
-                            }
-
-                            if(res.errors.phone){
-                                $('.updatePhoneError').removeClass('d-none');
-                                $('.updatePhoneError').text(res.errors.phone[0]);
-                            }else{
-                                $('.updatePhoneError').addClass('d-none');
-                            }
-                        }else if(res.status == 404){
-                            $('.successMessage').html("");
-                            $('.successMessage').addClass('alert alert-danger');
-                            $('.successMessage').text(res.message);
+                        if(res.status == 404){
+                            alertError(res.message);
                         }else{
-                            $('.successMessage').html("");
-                            $('.successMessage').addClass('alert alert-success');
-                            $('.successMessage').text(res.message);
+                            alertSuccess(res.message);
                             $('#editModal').modal('hide');
                             $('#editModal').find('input').val("");
                             $('.table').load(location.href+ ' .table');
                             pagination(1);
+                        }
+                    },error: function(reject){
+                        var res = $.parseJSON(reject.responseText);
+
+                        if(res.errors['name']){
+                            $('.updateNameError').removeClass('d-none');
+                            $('.updateNameError').text(res.errors['name'][0]);
+                        }else{
+                            $('.updateNameError').addClass('d-none');
+                        }
+
+                        if(res.errors['major']){
+                            $('.updateMajorError').removeClass('d-none');
+                            $('.updateMajorError').text(res.errors['major'][0]);
+                        }else{
+                            $('.updateMajorError').addClass('d-none');
+                        }
+
+                        if(res.errors['age']){
+                            $('.updateAgeError').removeClass('d-none');
+                            $('.updateAgeError').text(res.errors['age'][0]);
+                        }else{
+                            $('.updateAgeError').addClass('d-none');
+                        }
+
+                        if(res.errors['phone']){
+                            $('.updatePhoneError').removeClass('d-none');
+                            $('.updatePhoneError').text(res.errors['phone'][0]);
+                        }else{
+                            $('.updatePhoneError').addClass('d-none');
                         }
                     }
                 });
             });
 
             // Delete Major
+            $(document).on('click','.delete',function(e){
+                $('#deleteID').val($(this).data('id'));
+            })
+
             $(document).on('click','.destroy',function(e){
                 e.preventDefault();
 
-                var deleteID = $('.delete').data('id');
+                var deleteID = $('#deleteID').val();
                 $.ajax({
                     url: `/api/students/delete/${deleteID}`,
                     method: "DELETE",
                     dataType: "json",
                     success: function(res){
                         if(res.status == 404){
-                            $('.successMessage').html("");
-                            $('.successMessage').addClass('alert alert-danger');
-                            $('.successMessage').text(res.message);
+                            alertError(res.message);
                         }else{
-                            $('.successMessage').html("");
-                            $('.successMessage').addClass('alert alert-success');
-                            $('.successMessage').text(res.message);
+                            alertSuccess(res.message);
                             $('#deleteModal').modal('hide');
                             $('.table').load(location.href+ ' .table');
                             pagination(1);
@@ -403,6 +397,36 @@
                         $('.table-data').html(res);
                     }
                 });
+            }
+
+            $('#createModal').on('hidden.bs.modal', function () {
+                $('.createNameError').addClass('d-none');
+                $('.createMajorError').addClass('d-none');
+                $('.createAgeError').addClass('d-none');
+                $('.createPhoneError').addClass('d-none');
+            });
+
+            $('#editModal').on('hidden.bs.modal', function () {
+                $('.updateNameError').addClass('d-none');
+                $('.updateMajorError').addClass('d-none');
+                $('.updateAgeError').addClass('d-none');
+                $('.updatePhoneError').addClass('d-none');
+            });
+
+            function alertSuccess(message){
+                $('#alert').append(
+                    '<div class="alert alert-success alert-dismissible fade show">'
+                    +message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'+
+                    '</div>'
+                );
+            }
+
+            function alertError(message){
+                $('#alert').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">'
+                    +message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>'+
+                    '</div>'
+                );
             }
         });
     </script>
